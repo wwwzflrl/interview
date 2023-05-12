@@ -1,4 +1,4 @@
-package com.interview.interview.collection;
+package com.interview.interview.collection.list;
 
 import lombok.Getter;
 
@@ -6,21 +6,18 @@ import java.util.Iterator;
 
 /**
  *  My Array List have 8 main function:
- *  Implemented by array
  *  1.   Add Last                O(1)
- *  2.   Add First               O(1)
- *  3.   Add random index        O(N)
- *  4.   Remove Last             O(1)
- *  5.   Remove First            O(1)
- *  6.   Remove random index     O(N)
- *  7.   Get random index        O(N)
- *  8.   Update random index     O(N)
+ *  2.   Add random index        O(N)
+ *  3.   Remove Last             O(1)
+ *  4.   Remove random index     O(N)
+ *  5.   Get random index        O(N)
+ *  6.   Update random index     O(N)
  *
  * @param <T>
  */
-public class MyLinkedList<T> implements Iterable<T> {
+public class MyLinkedList<T> implements Iterable<T>, MyList<T> {
     final private Node<T> head;
-    
+
     final private Node<T> tail;
 
     @Getter
@@ -29,6 +26,7 @@ public class MyLinkedList<T> implements Iterable<T> {
     private static class Node<T> {
         T val;
         Node<T> next;
+
         Node<T> prev;
 
         Node(T val) {
@@ -44,7 +42,8 @@ public class MyLinkedList<T> implements Iterable<T> {
         this.size = 0;
     }
 
-    public void addLast(T t) {
+    @Override
+    public void add(T t) {
         Node<T> created = new Node<>(t);
         Node<T> temp = tail.prev;
 
@@ -57,20 +56,7 @@ public class MyLinkedList<T> implements Iterable<T> {
         size += 1;
     }
 
-
-    public void addFirst(T t) {
-        Node<T> created = new Node<>(t);
-        Node<T> temp = head.next;
-
-        created.next = temp;
-        temp.prev = created;
-
-        head.next = created;
-        created.prev = head;
-
-        size += 1;
-    }
-
+    @Override
     public void add(int index, T t) {
         Node<T> p = getNode(index);
         Node<T> temp = p.prev;
@@ -86,27 +72,17 @@ public class MyLinkedList<T> implements Iterable<T> {
         size += 1;
     }
 
-    public T removeFirst() {
-        Node<T> x = head.next;
-        Node<T> temp = x.next;
-
-        head.next = temp;
-        temp.prev = head;
-
-        x.prev = null;
-        x.next = null;
-
-        size -= 1;
-        return x.val;
-    }
-
-    public T removeLast() {
+    @Override
+    public T remove() {
         Node<T> x = tail.prev;
         Node<T> temp = tail.prev.prev;
 
         tail.prev = temp;
         temp.next = tail;
 
+        /**
+         * Important do not forget to set to null
+         */
         x.prev = null;
         x.next = null;
 
@@ -114,6 +90,7 @@ public class MyLinkedList<T> implements Iterable<T> {
         return x.val;
     }
 
+    @Override
     public T remove(int index) {
         Node<T> x = getNode(index);
         Node<T> prev = x.prev;
@@ -122,6 +99,9 @@ public class MyLinkedList<T> implements Iterable<T> {
         prev.next = next;
         next.prev = prev;
 
+        /**
+         * Important do not forget to set to null
+         */
         x.prev = null;
         x.next = null;
 
@@ -129,11 +109,13 @@ public class MyLinkedList<T> implements Iterable<T> {
         return x.val;
     }
 
+    @Override
     public T get(int index) {
         Node<T> p = getNode(index);
         return p.val;
     }
 
+    @Override
     public T set(int index, T val) {
         Node<T> p = getNode(index);
 
@@ -163,7 +145,7 @@ public class MyLinkedList<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             Node<T> p = head.next;
             @Override
             public boolean hasNext() {
