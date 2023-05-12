@@ -58,7 +58,7 @@ public class MyLinkedList<T> implements Iterable<T>, MyList<T> {
 
     @Override
     public void add(int index, T t) {
-        Node<T> p = getNode(index);
+        Node<T> p = index == 0 ? head.next : getNode(index);
         Node<T> temp = p.prev;
 
         Node<T> created = new Node<>(t);
