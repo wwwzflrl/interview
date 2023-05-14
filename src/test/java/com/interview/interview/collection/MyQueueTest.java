@@ -1,8 +1,11 @@
 package com.interview.interview.collection;
 
+import com.interview.interview.collection.heap.MyBinaryHeap;
 import com.interview.interview.collection.queue.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 public class MyQueueTest {
     @Test
@@ -83,4 +86,25 @@ public class MyQueueTest {
 
 
     }
+
+    @Test
+    public void myPriorityQueue() {
+        MyQueue<Integer> myPriorityQueue = new MyPriorityQueue<>();
+
+        int[] values = {1, 15, 23,4, 25, 24, 24, 5, 4};
+        Arrays.stream(values).forEach((i) -> {
+            myPriorityQueue.offer(i);
+        });
+
+        Assertions.assertEquals(myPriorityQueue.poll(), 1);
+        Assertions.assertEquals(myPriorityQueue.poll(), 4);
+        Assertions.assertEquals(myPriorityQueue.poll(), 4);
+        Assertions.assertEquals(myPriorityQueue.poll(), 5);
+        Assertions.assertEquals(myPriorityQueue.poll(), 15);
+        Assertions.assertEquals(myPriorityQueue.poll(), 23);
+        Assertions.assertEquals(myPriorityQueue.poll(), 24);
+        Assertions.assertEquals(myPriorityQueue.poll(), 24);
+        Assertions.assertEquals(myPriorityQueue.poll(), 25);
+    }
+
 }
