@@ -3,6 +3,7 @@ package com.interview.interview.collection;
 import com.interview.interview.collection.list.MyArrayList;
 import com.interview.interview.collection.list.MyLinkedList;
 import com.interview.interview.collection.list.MyList;
+import com.interview.interview.collection.list.MyRecursiveList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -80,5 +81,41 @@ public class MyListTest {
         Assertions.assertEquals(myLinkedList.get(4), 8);
         Assertions.assertEquals(myLinkedList.get(5), 16);
 
+    }
+
+    @Test
+    public void recursiveList() {
+        MyList<Integer> myRecursiveList = new MyRecursiveList<>();
+
+        // add items
+        for (int i = 0; i <= 20; i += 4) {
+            myRecursiveList.add(i);
+        }
+        Assertions.assertEquals(myRecursiveList.getSize(), 6);
+
+        Integer deletedItem = myRecursiveList.remove(3);
+        Assertions.assertEquals(myRecursiveList.getSize(), 5);
+        Assertions.assertEquals(deletedItem, 12);
+
+        myRecursiveList.add(1, 9);
+        Assertions.assertEquals(myRecursiveList.getSize(), 6);
+        Assertions.assertEquals(myRecursiveList.get(1), 9);
+
+
+        myRecursiveList.add(0, 100);
+        Assertions.assertEquals(myRecursiveList.getSize(), 7);
+        Assertions.assertEquals(myRecursiveList.get(0), 100);
+
+        Integer deletedItem2 = myRecursiveList.remove();
+        Assertions.assertEquals(myRecursiveList.getSize(), 6);
+        Assertions.assertEquals(deletedItem2, 20);
+
+
+        Assertions.assertEquals(myRecursiveList.get(0), 100);
+        Assertions.assertEquals(myRecursiveList.get(1), 0);
+        Assertions.assertEquals(myRecursiveList.get(2), 9);
+        Assertions.assertEquals(myRecursiveList.get(3), 4);
+        Assertions.assertEquals(myRecursiveList.get(4), 8);
+        Assertions.assertEquals(myRecursiveList.get(5), 16);
     }
 }
